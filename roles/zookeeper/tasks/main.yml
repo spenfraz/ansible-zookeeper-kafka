@@ -1,0 +1,33 @@
+---
+- name: download stable zookeeper tar
+      
+  get_url: url=http://download.nextag.com/apache/zookeeper/stable/{{ Zoo_tar }}  dest=/tmp/{{ Zoo_tar }}
+  
+
+- name: unpack tar
+  
+  unarchive: src=/tmp/{{ Zoo_tar }}  dest=/opt/  copy=no
+
+- name: add JAVA_HOME and ZOOKEEPER_HOME to path 
+
+  blockinfile: |
+            dest=/home/ec2-user/.bash_profile backup=yes
+            content="export JAVA_HOME=/usr/lib/jvm/jre-1.7.0-openjdk.x86_64/
+                     export ZOOKEEPER_HOME=/opt/{{ Zoo_dir }}
+                     export PATH=$PATH:$ZOOKEEPER_HOME/bin:$JAVA_HOME/bin"
+
+- name: create zoo.cfg
+
+  template: src=zoo.cfg.j2 dest=/opt/{{ Zoo_dir }}/conf/zoo.cfg
+ 
+- name: create /var/lib/zookeeper
+
+  file: path=/var/lib/zookeeper/ state=directory
+
+- name: write myid file
+
+  template: src=myid.j2   dest=/var/lib/zookeeper/myid
+
+- name: start zookeeper 
+    
+  shell: nohup /opt/zookeeper-3.4.8/bin/zkServer.sh start & 

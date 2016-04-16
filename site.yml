@@ -1,0 +1,12 @@
+---
+- hosts: zoo_servers  
+  sudo: yes
+  roles:
+    - zookeeper
+
+- hosts: kafka_servers
+  sudo: yes
+  roles:
+    - kafka
+
+

@@ -1,0 +1,23 @@
+---
+- name: download stable tar
+      
+  get_url: url=http://apache.mivzakim.net/kafka/0.8.2.0/kafka_2.10-0.8.2.0.tgz dest=/tmp/
+
+- name: unpack tar
+
+  unarchive: src=/tmp/{{ Kafka_tar }} dest=/opt/ copy=no
+
+- name: update server.properties file
+      
+  template: src=server.properties.j2 dest=/opt/{{ Kafka_dir }}/config/server.properties
+
+- name: update zookeeper.properties file
+
+  template: src=zookeeper.properties.j2 dest=/opt/{{ Kafka_dir }}/config/zookeeper.properties
+
+- name: start kafka
+
+  shell: nohup /opt/{{ Kafka_dir }}/bin/kafka-server-start.sh /opt/{{ Kafka_dir }}/config/server.properties &
+
+
+
