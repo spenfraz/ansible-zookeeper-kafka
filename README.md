@@ -2,7 +2,7 @@
 Zookeeper ensemble + Kafka cluster on CentOS EC2 via Ansible
 
 
-Note: supports variable sized Zookeeper ensemble or Kafka cluster
+Note: supports variable sized Zookeeper ensemble and Kafka cluster
 
 Purpose: To automate configuration of (manually created) EC2 instances. 
 
